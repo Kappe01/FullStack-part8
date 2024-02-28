@@ -3,7 +3,7 @@ import { useState } from "react";
 const Authors = (props) => {
   const [name, setName] = useState("");
   const [born, setBorn] = useState("");
-  if (!props.show) {
+  if (!props.show || !props.authors) {
     return null;
   }
 
@@ -13,7 +13,8 @@ const Authors = (props) => {
     event.preventDefault();
 
     console.log("updating author...");
-
+    console.log(name);
+    console.log(born);
     const author = props.editAuthor({
       variables: { name, setBornTo: parseInt(born) },
     });
@@ -47,6 +48,7 @@ const Authors = (props) => {
       <form onSubmit={submit}>
         <div>
           <select value={name} onChange={({ target }) => setName(target.value)}>
+            <option value="">Select an author</option>
             {authors.map((a) => (
               <option key={a.name} value={a.name}>
                 {a.name}
